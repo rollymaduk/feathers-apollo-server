@@ -1,7 +1,7 @@
 {
   "name": "feathers-apollo-server",
   "description": "A feathers-apollo-server service plugin for for feathers  minimalist real-time framework ",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "homepage": "https://github.com/rollymaduk/feathers-apollo-server",
   "main": "lib/",
   "keywords": [
@@ -11,11 +11,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/rollymaduk/feathers-apollo-server.git"
+    "url": "https://github.com/rollymaduk/feathers-apollo-server.git"
   },
   "config": {
-    "commitizen":{
-      "path":"cz-conventional-changelog"
+    "commitizen": {
+      "path": "cz-conventional-changelog"
     }
   },
   "author": {
@@ -44,7 +44,8 @@
     "coverage": "istanbul cover node_modules/mocha/bin/_mocha -- --opts mocha.opts",
     "test": "npm run compile && npm run lint && npm run coverage",
     "start": "npm run compile && node example/app",
-    "commit": "git cz -a"
+    "commit": "git cz -a",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "semistandard": {
     "sourceType": "module",
@@ -73,6 +74,7 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "rimraf": "^2.5.4",
-    "semistandard": "^9.1.0"
+    "semistandard": "^9.1.0",
+    "semantic-release": "^6.3.2"
   }
 }
