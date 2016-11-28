@@ -8,12 +8,15 @@ node_js:
   - '7'
   - '6'
   - '4'
+addons:
+  code_climate:
+    repo_token: '751e70eb5e720bede2ddf14fc7a2fdf68f4755756b72b3c96946c4af3bdd18c4'
 before_script:
-  - npm prune
-script"
+  - npm install -g codeclimate-test-reporter && npm prune
+script:
   - npm test
 after_success:
-  - npm run semantic-release
+  - npm run semantic-release && codeclimate-test-reporter < coverage/lcov.info
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/

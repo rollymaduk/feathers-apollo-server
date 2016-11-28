@@ -58,7 +58,11 @@
   },
   "dependencies": {
     "debug": "^2.3.3",
-    "feathers-errors": "^2.5.0"
+    "feathers-errors": "^2.5.0",
+    "graphql": "^0.8.2",
+    "graphql-server-express": "^0.4.3",
+    "graphql-tools": "^0.8.3",
+    "lodash": "^4.17.2"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
@@ -74,7 +78,8 @@
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "rimraf": "^2.5.4",
+    "semantic-release": "^6.3.2",
     "semistandard": "^9.1.0",
-    "semantic-release": "^6.3.2"
+    "testdouble": "^1.9.0"
   }
 }

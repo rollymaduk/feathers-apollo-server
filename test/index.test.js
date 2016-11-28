@@ -1,14 +1,69 @@
-import { expect } from 'chai';
-import plugin from '../src';
+import {resolvers, typeDefs} from '../src/sampleSchema';
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+import service from '../src';
+const assert = require('assert');
+const feathers = require('feathers');
+const apollo = service({typeDefs, resolvers});
+const app = feathers();
+const port = 3035;
+const expect = chai.expect;
+const bodyParser = require('body-parser');
 
+chai.use(chaiHttp);
+app.use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use('/graphql', apollo);
+
+// import gql from "graphql-tag"
+
+// app.use('/apolloServer',service())
+// app.configure(service())
 
 describe('feathers-apollo-server', () => {
+  before(function (done) {
+    this.server = app.listen(port);
+    this.server.once('listening', () => {
+      done();
+    });
+  });
+
+  after(function (done) {
+    this.server.close(() => {
+      done();
+    });
+  });
+
+  it('should initialize apolloserver', function (done) {
+    assert(app.service('graphql'));
+    done();
+  });
+
+  it('should throw error when schema argument is empty', function () {
+    'use strict';
+    expect(service.bind(null, {})).to.throw('apolloServer typeDefs needs to be provided!');
+  });
+  it('should throw error when resolver argument is empty', function () {
+    'use strict';
+    expect(service.bind(null, {typeDefs: ['typeDefs']})).to.throw('apolloServer resolvers needs to be provided!');
+  });
+
   it('is CommonJS compatible', () => {
     expect(typeof require('../lib')).to.equal('function');
   });
 
-  it('basic functionality', () => {
-    expect(typeof plugin).to.equal('function', 'It worked');
-    expect(plugin()).to.equal('feathers-apollo-server');
+  it('basic functionality', function (done) {
+    chai.request(app)
+      .post('/graphql')
+      .set('Accept', 'application/json')
+      .send({query: 'query {testString}'})
+      .end((err, res) => {
+        expect(res.body.data).to.have.property('testString');
+        expect(res.body.data.testString).to.eqls('this is a test string');
+        if (err) {
+
+        }
+        done();
+      });
   });
 });
