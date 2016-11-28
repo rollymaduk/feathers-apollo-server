@@ -16,7 +16,8 @@ before_script:
 script:
   - npm test
 after_success:
-  - npm run semantic-release && codeclimate-test-reporter < coverage/lcov.info
+  - codeclimate-test-reporter < coverage/lcov.info
+  - npm run semantic-release
 branches:
   except:
     - /^v\d+\.\d+\.\d+$/
