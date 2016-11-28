@@ -6,7 +6,7 @@
 [![Dependency Status](https://img.shields.io/david/rollymaduk/feathers-apollo-server.svg?style=flat-square)](https://david-dm.org/rollymaduk/feathers-apollo-server)
 [![Download Status](https://img.shields.io/npm/dm/feathers-apollo-server.svg?style=flat-square)](https://www.npmjs.com/package/feathers-apollo-server)
 
-> A feathers-apollo-server service plugin for for feathers  minimalist real-time framework 
+> A feathers-apollo-server  plugin for apollo graphql server integration with feathers  minimalist real-time framework 
 
 ## Installation
 
@@ -15,8 +15,69 @@ npm install feathers-apollo-server --save
 ```
 
 ## Documentation
+```
+graphqlServer({typeDefs,resolver,[opts]},[extraOpts],[graphiqlOpts])
+```
+```js
+// setup
 
-Please refer to the [feathers-apollo-server documentation](http://docs.feathersjs.com/) for more details.
+export const typeDefs = [`type Query{
+  testString:String
+}
+schema{
+  query:Query
+}
+`];
+export const resolvers = {
+  Query: {
+    testString () {
+      'use strict';
+      return 'this is a test string';
+    }
+  }
+};
+const Opts={schema,resolvers} //makeExecutable schema options
+const extraOpts={context:{key:"context_Value"}} // graphql server options: 
+
+// Register the service, see below for an example
+app.use('/graphql', graphqlService(Opts,extraOpts));
+
+// Use the service
+const chai=require("chai")
+const chai_http=require("chai-http")
+chai.use(chai_http)
+const feathers = require('feathers');
+const service = require('feathers-apollo-server');
+const apollo = service({typeDefs, resolvers});
+const app = feathers();
+const port = 3035;
+const expect = chai.expect;
+const body_parser=require('body_parser');
+
+app.use(bodyParser.json())
+  .use(bodyParser.urlencoded({ extended: true }))
+  .use('/graphql', apollo);
+
+app.listen(port).once('listening',()=>{
+    chai.request(app)
+          .post('/graphql')
+          .set('Accept', 'application/json')
+          .send({query: 'query {testString}'})
+          .end((err, res) => {
+            expect(res.body.data).to.have.property('testString');
+            expect(res.body.data.testString).to.eqls('this is a test string');
+            
+          });
+})
+
+```
+##Plugin Args
+**Opts:** 
+The same as makeExecutableSchema, typeDefs and resolvers are required while other arguments are optional,learn more [options](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema) from graphql-tools<br>
+
+**extraOpts(Optional):** graphql express options, you can learn more [here](http://dev.apollodata.com/tools/graphql-server/setup.html#graphqlOptions)
+
+**graphiqlOpts:** Same as [graphiql Options](http://dev.apollodata.com/tools/graphql-server/graphiql.html#graphiqlOptions) except for the grapiqlUrl property for specifying path to graphiql UI default is '/graphiql'
 
 ## Complete Example
 
@@ -30,6 +91,9 @@ const bodyParser = require('body-parser');
 const errorHandler = require('feathers-errors/handler');
 const plugin = require('feathers-apollo-server');
 
+const Opts={schema,resolvers} //makeExecutable schema options
+const extraOpts={context:{key:"context_Value"}} // graphql server options: 
+
 // Initialize the application
 const app = feathers()
   .configure(rest())
@@ -38,7 +102,8 @@ const app = feathers()
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
   // Initialize your feathers plugin
-  .use('/plugin', plugin())
+  
+  .use('/plugin', plugin(opts,extraOpts))
   .use(errorHandler());
 
 app.listen(3030);

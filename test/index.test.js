@@ -66,4 +66,15 @@ describe('feathers-apollo-server', () => {
         done();
       });
   });
+  it('basic functionality for graphiql', function (done) {
+    chai.request(app)
+      .get('/graphiql')
+      .end((err, res) => {
+        expect(res.statusCode).to.eqls(200)
+        if (err) {
+
+        }
+        done();
+      });
+  });
 });
