@@ -3,6 +3,7 @@ import makeDebug from 'debug';
 import {makeExecutableSchema} from 'graphql-tools';
 import {graphqlExpress,graphiqlExpress} from 'graphql-server-express';
 const _assign = require('lodash/assign');
+const _omit = require('lodash/omit');
 
 const debug = makeDebug('feathers-apollo-server');
 class Service {
@@ -23,7 +24,8 @@ class Service {
     app.use(`/${path}`, graphqlExpress((req) => {
       return _assign(this.extraOpts, {schema});
     }));
-    app.use(this.gOpts && this.gOpts.graphiqlUrl || `/graphiql`,graphiqlExpress(_assign(this.gOpts,{endpointURL: `/${path}`
+    app.use(this.gOpts && this.gOpts.graphiqlUrl || `/graphiql`
+      ,graphiqlExpress(_assign(_omit(this.gOpts,['graphiqlUrl']),{endpointURL: `/${path}`
     })))
   }
 

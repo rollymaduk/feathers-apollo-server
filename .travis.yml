@@ -7,7 +7,7 @@ notifications:
 node_js:
   - '7'
   - '6'
-  - '4'
+  - '5'
 addons:
   code_climate:
     repo_token: '751e70eb5e720bede2ddf14fc7a2fdf68f4755756b72b3c96946c4af3bdd18c4'
