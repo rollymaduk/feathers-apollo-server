@@ -4,7 +4,7 @@ const chaiHttp = require('chai-http');
 import service from '../src';
 const assert = require('assert');
 const feathers = require('feathers');
-const apollo = service({typeDefs, resolvers});
+const apollo = service({path:"/graphql",typeDefs, resolvers});
 const app = feathers();
 const port = 3035;
 const expect = chai.expect;
@@ -13,7 +13,7 @@ const bodyParser = require('body-parser');
 chai.use(chaiHttp);
 app.use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
-  .use('/graphql', apollo);
+  .configure(apollo);
 
 // import gql from "graphql-tag"
 
@@ -34,18 +34,17 @@ describe('feathers-apollo-server', () => {
     });
   });
 
-  it('should initialize apolloserver', function (done) {
-    assert(app.service('graphql'));
-    done();
-  });
-
   it('should throw error when schema argument is empty', function () {
     'use strict';
-    expect(service.bind(null, {})).to.throw('apolloServer typeDefs needs to be provided!');
+    expect(service({})).to.throw('apolloServer path needs to be provided!');
+  });
+  it('should throw error when schema argument is empty', function () {
+    'use strict';
+    expect(service({path:"/path"})).to.throw('apolloServer typeDefs needs to be provided!');
   });
   it('should throw error when resolver argument is empty', function () {
     'use strict';
-    expect(service.bind(null, {typeDefs: ['typeDefs']})).to.throw('apolloServer resolvers needs to be provided!');
+    expect(service({path:"path",typeDefs: ['typeDefs']})).to.throw('apolloServer resolvers needs to be provided!');
   });
 
   it('is CommonJS compatible', () => {

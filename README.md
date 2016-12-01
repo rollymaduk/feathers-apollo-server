@@ -36,11 +36,11 @@ export const resolvers = {
     }
   }
 };
-const Opts={schema,resolvers} //makeExecutable schema options
+const Opts={path:'/graphql',schema,resolvers} //makeExecutable schema options
 const extraOpts={context:{key:"context_Value"}} // graphql server options: 
 
-// Register the service, see below for an example
-app.use('/graphql', graphqlService(Opts,extraOpts));
+// Register the plugin, see below for an example
+app.configure('/graphql', graphqlService(Opts,extraOpts));
 
 // Use the service
 const chai=require("chai")
@@ -73,7 +73,7 @@ app.listen(port).once('listening',()=>{
 ```
 ##Plugin Args
 **Opts:** 
-The same as makeExecutableSchema, typeDefs and resolvers are required while other arguments are optional,learn more [options](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema) from graphql-tools<br>
+The same as makeExecutableSchema, path,typeDefs and resolvers are required while other arguments are optional,learn more [options](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema) from graphql-tools<br>
 
 **extraOpts(Optional):** graphql express options, you can learn more [here](http://dev.apollodata.com/tools/graphql-server/setup.html#graphqlOptions)
 
@@ -91,7 +91,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('feathers-errors/handler');
 const plugin = require('feathers-apollo-server');
 
-const Opts={schema,resolvers} //makeExecutable schema options
+const Opts={path:'/plugin',schema,resolvers} //makeExecutable schema options
 const extraOpts={context:{key:"context_Value"}} // graphql server options: 
 
 // Initialize the application
@@ -101,11 +101,9 @@ const app = feathers()
   // Needed for parsing bodies (login)
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
+  .use(errorHandler())
   // Initialize your feathers plugin
-  
-  .use('/plugin', plugin(opts,extraOpts))
-  .use(errorHandler());
-
+  .configure(plugin(opts,extraOpts);
 app.listen(3030);
 
 console.log('Feathers app started on 127.0.0.1:3030');
