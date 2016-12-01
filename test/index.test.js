@@ -2,7 +2,7 @@ import {resolvers, typeDefs} from '../src/sampleSchema';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 import service from '../src';
-const assert = require('assert');
+//const assert = require('assert');
 const feathers = require('feathers');
 const apollo = service({path:"/graphql",typeDefs, resolvers});
 const app = feathers();
