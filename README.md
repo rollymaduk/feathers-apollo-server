@@ -91,7 +91,7 @@ const bodyParser = require('body-parser');
 const errorHandler = require('feathers-errors/handler');
 const plugin = require('feathers-apollo-server');
 
-const Opts={path:'/plugin',schema,resolvers} //makeExecutable schema options
+const Opts={path:'/plugin',schema,resolvers}  //makeExecutable schema options
 const extraOpts={context:{key:"context_Value"}} // graphql server options: 
 
 // Initialize the application
