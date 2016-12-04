@@ -56,7 +56,7 @@ const body_parser=require('body_parser');
 
 app.use(bodyParser.json())
   .use(bodyParser.urlencoded({ extended: true }))
-  .use('/graphql', apollo);
+  .configure('/graphql', apollo);
 
 app.listen(port).once('listening',()=>{
     chai.request(app)
@@ -108,6 +108,11 @@ app.listen(3030);
 
 console.log('Feathers app started on 127.0.0.1:3030');
 ```
+## Todo
+
+- Add server request object to graphql context 
+- Write more tests
+- Improve readme documentation
 
 ## License
 
