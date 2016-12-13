@@ -28,6 +28,7 @@ schema{
   query:Query
 }
 `];
+
 export const resolvers = {
   Query: {
     testString () {
