@@ -40,40 +40,12 @@ const Opts={path:'/graphql',schema,resolvers} //makeExecutable schema options
 const extraOpts={context:{key:"context_Value"}} // graphql server options: 
 
 // Register the plugin, see below for an example
-app.configure('/graphql', graphqlService(Opts,extraOpts));
-
-// Use the service
-const chai=require("chai")
-const chai_http=require("chai-http")
-chai.use(chai_http)
-const feathers = require('feathers');
-const service = require('feathers-apollo-server');
-const apollo = service({typeDefs, resolvers});
-const app = feathers();
-const port = 3035;
-const expect = chai.expect;
-const body_parser=require('body_parser');
-
-app.use(bodyParser.json())
-  .use(bodyParser.urlencoded({ extended: true }))
-  .configure('/graphql', apollo);
-
-app.listen(port).once('listening',()=>{
-    chai.request(app)
-          .post('/graphql')
-          .set('Accept', 'application/json')
-          .send({query: 'query {testString}'})
-          .end((err, res) => {
-            expect(res.body.data).to.have.property('testString');
-            expect(res.body.data.testString).to.eqls('this is a test string');
-            
-          });
-})
+app.configure(graphqlService(Opts,extraOpts));
 
 ```
 ##Plugin Args
 **Opts:** 
-The same as makeExecutableSchema, path,typeDefs and resolvers are required while other arguments are optional,learn more [options](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema) from graphql-tools<br>
+The same as makeExecutableSchema options. **_path_**,**_typeDefs_** and **_resolvers_** are required while other arguments are optional,learn more [options](http://dev.apollodata.com/tools/graphql-tools/generate-schema.html#makeExecutableSchema) from graphql-tools<br>
 
 **extraOpts(Optional):** graphql express options, you can learn more [here](http://dev.apollodata.com/tools/graphql-server/setup.html#graphqlOptions)
 
@@ -103,7 +75,7 @@ const app = feathers()
   .use(bodyParser.urlencoded({ extended: true }))
   .use(errorHandler())
   // Initialize your feathers plugin
-  .configure(plugin(opts,extraOpts);
+  .configure(plugin(opts,extraOpts));
 app.listen(3030);
 
 console.log('Feathers app started on 127.0.0.1:3030');
