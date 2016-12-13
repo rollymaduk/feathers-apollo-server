@@ -36,6 +36,7 @@ export const resolvers = {
     }
   }
 };
+
 const Opts={path:'/graphql',schema,resolvers} //makeExecutable schema options
 const extraOpts={context:{key:"context_Value"}} // graphql server options: 
 
