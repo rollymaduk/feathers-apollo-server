@@ -26,11 +26,11 @@ export default function init (options,extraOpts,graphiqlOpts) {
 
     const schema=makeExecutableSchema(_omit(options,['path']))
     app.use(`${options.path}`, graphqlExpress((req) => {
-      return _assign(this.extraOpts, {schema});
+      return _assign(extraOpts, {schema});
     }));
 
-    app.use(this.gOpts && this.gOpts.graphiqlUrl || `/graphiql`
-      ,graphiqlExpress(_assign(_omit(this.gOpts,['graphiqlUrl']),{endpointURL: `${options.path}`
+    app.use(graphiqlOpts && graphiqlOpts.graphiqlUrl || `/graphiql`
+      ,graphiqlExpress(_assign(_omit(graphiqlOpts,['graphiqlUrl']),{endpointURL: `${options.path}`
       })))
   }
 
