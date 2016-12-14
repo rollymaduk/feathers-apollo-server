@@ -1,19 +1,19 @@
 // import errors from 'feathers-errors';
 import makeDebug from 'debug';
 import {makeExecutableSchema} from 'graphql-tools';
-import {graphqlExpress,graphiqlExpress} from 'graphql-server-express';
+import {graphqlExpress, graphiqlExpress} from 'graphql-server-express';
 const _assign = require('lodash/assign');
 const _omit = require('lodash/omit');
 
 const debug = makeDebug('feathers-apollo-server');
 
-export default function init (options,extraOpts,graphiqlOpts) {
+export default function init (options, extraOpts, graphiqlOpts) {
   debug('Initializing feathers-apollo-server plugin');
-  return function(){
-    "use strict";
-    const app=this
-    if(!options.path){
-      throw new Error('apolloServer path needs to be provided!')
+  return function () {
+    'use strict';
+    const app = this;
+    if (!options.path) {
+      throw new Error('apolloServer path needs to be provided!');
     }
 
     if (!options.typeDefs) {
@@ -24,15 +24,14 @@ export default function init (options,extraOpts,graphiqlOpts) {
       throw new Error('apolloServer resolvers needs to be provided!');
     }
 
-    const schema=makeExecutableSchema(_omit(options,['path']))
+    const schema = makeExecutableSchema(_omit(options, ['path']));
     app.use(`${options.path}`, graphqlExpress((req) => {
       return _assign(extraOpts, {schema});
     }));
 
     app.use(graphiqlOpts && graphiqlOpts.graphiqlUrl || `/graphiql`
-      ,graphiqlExpress(_assign(_omit(graphiqlOpts,['graphiqlUrl']),{endpointURL: `${options.path}`
-      })))
-  }
-
+      , graphiqlExpress(_assign(_omit(graphiqlOpts, ['graphiqlUrl']), {endpointURL: `${options.path}`
+      })));
+  };
 }
 
