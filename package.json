@@ -55,8 +55,10 @@
     "debug": "^2.3.3",
     "feathers-errors": "^2.5.0",
     "graphql": "^0.9.1",
-    "graphql-server-express": "^0.6.0",
+
+    "graphql-server-express": "^0.7.0",
     "graphql-tools": "^0.11.0",
+
     "lodash": "^4.17.2"
   },
 
@@ -70,7 +72,7 @@
     "chai-http": "^3.0.0",
     "feathers": "^2.0.2",
     "feathers-rest": "^1.5.2",
-    "feathers-socketio": "^1.4.2",
+    "feathers-socketio": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
     "rimraf": "^2.5.4",
