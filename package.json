@@ -71,7 +71,7 @@
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
     "feathers": "^2.0.2",
-    "feathers-rest": "^1.5.2",
+    "feathers-rest": "^1.7.3",
     "feathers-socketio": "^2.0.0",
     "istanbul": "^1.1.0-alpha.1",
     "mocha": "^3.2.0",
