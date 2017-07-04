@@ -56,8 +56,9 @@
     "feathers-errors": "^2.5.0",
     "graphql": "^0.9.1",
 
-    "graphql-server-express": "^0.8.0",
-    "graphql-tools": "^0.11.0",
+
+   "graphql-server-express": "^0.8.0,
+    "graphql-tools": "^1.0.0",
 
     "lodash": "^4.17.2"
   },
