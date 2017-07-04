@@ -1,5 +1,7 @@
 # feathers-apollo-server
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rollymaduk/feathers-apollo-server.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/rollymaduk/feathers-apollo-server.png?branch=master)](https://travis-ci.org/rollymaduk/feathers-apollo-server)
 [![Code Climate](https://codeclimate.com/github/rollymaduk/feathers-apollo-server/badges/gpa.svg)](https://codeclimate.com/github/rollymaduk/feathers-apollo-server)
 [![Test Coverage](https://codeclimate.com/github/rollymaduk/feathers-apollo-server/badges/coverage.svg)](https://codeclimate.com/github/rollymaduk/feathers-apollo-server/coverage)
