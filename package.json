@@ -78,6 +78,6 @@
     "rimraf": "^2.5.4",
     "semantic-release": "^6.3.2",
     "semistandard": "^9.1.0",
-    "testdouble": "^2.1.2"
+    "testdouble": "^3.0.0"
   }
 }
